@@ -1,10 +1,14 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AssignClassTeacherController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ClassSubjectController;
+use App\Http\Controllers\ClassTimetableController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExamintaionController;
 use App\Http\Controllers\ParentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
@@ -103,7 +107,44 @@ Route::get('admin/parent/my-student/{id}', [ParentController::class,'myStudent']
 Route::get('admin/parent/assign-student-parent/{student_id}/{parent_id}', [ParentController::class,'assignStudentParent']);
 Route::get('admin/parent/assign-student-parent-delete/{student_id}', [ParentController::class,'assignStudentParentDelete']);
 
+//assign class teacher
+Route::get('admin/assign_class_teacher/list/', [AssignClassTeacherController::class,'list']);
+Route::get('admin/assign_class_teacher/add/', [AssignClassTeacherController::class,'add']);
+Route::post('admin/assign_class_teacher/add/', [AssignClassTeacherController::class,'insert']);
+Route::get('admin/assign_class_teacher/edit/{id}', [AssignClassTeacherController::class,'edit']);
+Route::post('admin/assign_class_teacher/edit/{id}', [AssignClassTeacherController::class,'update']);
+Route::get('admin/assign_class_teacher/delete/{id}', [AssignClassTeacherController::class,'delete']);
+Route::get('/admin/assign_class_teacher/edit_single/{id}', [AssignClassTeacherController::class,'edit_single']);
+Route::post('/admin/assign_class_teacher/edit_single/{id}', [AssignClassTeacherController::class,'update_single']);
 
+//class timetable
+Route::get('admin/class_timetable/list/', [ClassTimetableController::class,'list']);
+Route::post('admin/class_timetable/get_subject', [ClassTimetableController::class,'get_subject']);
+Route::post('admin/class_timetable/add', [ClassTimetableController::class,'insert_update']);
+
+
+//examinations
+Route::get('admin/examinations/exam/list', [ExamintaionController::class,'exam_list']);
+Route::get('admin/examinations/exam/add', [ExamintaionController::class,'exam_add']);
+Route::post('admin/examinations/exam/add', [ExamintaionController::class,'exam_insert']);
+Route::get('admin/examinations/exam/edit/{id}', [ExamintaionController::class,'exam_edit']);
+Route::post('admin/examinations/exam/edit/{id}', [ExamintaionController::class,'exam_update']);
+Route::get('admin/examinations/exam/delete/{id}', [ExamintaionController::class,'exam_delete']);
+
+Route::get('admin/examinations/exam_schedule', [ExamintaionController::class,'exam_schedule']);
+Route::post('admin/examinations/exam_schedule_insert', [ExamintaionController::class,'exam_schedule_insert']);
+
+Route::get('admin/examinations/marks_register', [ExamintaionController::class,'marks_register']);
+Route::post('admin/examinations/submit_marks_register', [ExamintaionController::class,'submit_marks_register']);
+Route::post('admin/examinations/single_submit_marks_register', [ExamintaionController::class,'single_submit_marks_register']);
+
+//marks grade
+Route::get('admin/examinations/marks_grade', [ExamintaionController::class,'marks_grade']);
+// Route::get('admin/examinations/marks_grade_add', [ExamintaionController::class,'marks_grade_add']);
+// Route::post('admin/examinations/marks_grade_add', [ExamintaionController::class,'marks_grade_add']);
+// Route::get('admin/examinations/marks_grade_edit/{id}', [ExamintaionController::class,'marks_grade_edit']);
+// Route::post('admin/examinations/marks_grade_edit/{id}', [ExamintaionController::class,'marks_grade_update']);
+// Route::get('admin/examinations/marks_grade_delete/{id}', [ExamintaionController::class,'marks_grade_delete']);
 
 
 
@@ -114,7 +155,12 @@ Route::group(['middleware'=> 'student'], function () {
         Route::get('student/change_password', [UserController::class,'change_password']);
         Route::post('student/change_password', [UserController::class,'update_change_password']);
         Route::get('student/account', [UserController::class,'myAccount']);
+        Route::get('student/my_subject', [SubjectController::class,'mySubject']);
         Route::post('student/account', [UserController::class,'updateMyAccountStudent']);
+        Route::get('student/my_timetable', [ClassTimetableController::class,'myTimetable']);
+        Route::get('student/my_exam_timetable', [ExamintaionController::class,'myExamTimetable']);
+        Route::get('student/my_exam_result', [ExamintaionController::class,'myExamResult']);
+        Route::get('student/my_calendar', [CalendarController::class,'myCalendar']);
 
 
 
@@ -127,6 +173,18 @@ Route::group(['middleware'=> 'teacher'], function () {
         Route::post('teacher/change_password', [UserController::class,'update_change_password']);
         Route::get('teacher/account', [UserController::class,'myAccount']);
         Route::post('teacher/account', [UserController::class,'updateMyAccountTeacher']);
+        Route::get('teacher/my_class_subject', [AssignClassTeacherController::class,'myClassSubject']);
+        Route::get('teacher/my_student', [StudentController::class,'myStudent']);
+        Route::get('teacher/my_class_subject/class_timetable/{class_id}/{subject_id}', [ClassTimetableController::class,'myTimetableTeacher']);
+
+        Route::get('teacher/my_exam_timetable', [ExamintaionController::class,'myExamTimetableTeacher']);
+        Route::get('teacher/my_calendar', [CalendarController::class,'myCalendarTeacher']);
+        Route::get('teacher/marks_register', [ExamintaionController::class,'marks_register_teacher']);
+        Route::post('teacher/submit_marks_register', [ExamintaionController::class,'submit_marks_register']);
+        Route::post('teacher/single_submit_marks_register', [ExamintaionController::class,'single_submit_marks_register']);
+
+
+
 
 
 });
@@ -137,7 +195,12 @@ Route::group(['middleware'=> 'parent'], function () {
         Route::post('parent/change_password', [UserController::class,'update_change_password']);
         Route::get('parent/account', [UserController::class,'myAccount']);
         Route::post('parent/account', [UserController::class,'updateMyAccountParent']);
-
+        Route::get('parent/my-student', [ParentController::class,'myStudentParent']);
+        Route::get('parent/my_student/calendar/{student_id}', [CalendarController::class,'myCalendarParent']);
+        Route::get('parent/my_student/subject/{student_id}', [SubjectController::class,'parentStudentSubject']);
+        Route::get('parent/my_student/exam_timetable/{student_id}', [ExamintaionController::class,'MyExamTimetableparent']);
+        Route::get('parent/my_student/exam_result/{student_id}', [ExamintaionController::class,'MyExamResultparent']);
+        Route::get('parent/my_student/subject/class_timetable/{class_id}/{subject_id}/{student_id}', [ClassTimetableController::class,'MyTimetableparent']);
 
 
 });

@@ -91,8 +91,8 @@
                         <label for="status">Status</label>
                         <select name="status" id="status" class="form-control" >
                             <option value="">Select Status</option>
-                            <option {{Request::get('status')== 100 ? 'selected' :''}} value="100">Active</option>
-                            <option {{Request::get('status')== 0 ? 'selected' :''}} value="0">Inactive</option>
+                            <option {{(Request::get('status'))== 100 ? 'selected' :''}} value="100">Active</option>
+                            <option {{(Request::get('status'))== 1 ? 'selected' :''}} value="1">Inactive</option>
 
                         </select>
 
@@ -186,7 +186,7 @@
                               <td>{{ $user->email }}</td>
                               <td>{{ $user->admission_number }}</td>
                               <td>{{ $user->roll_number }}</td>
-                              <td>{{ $user->class_id }}</td>
+                              <td>{{ $user->class_name }}</td>
                               <td>{{ $user->gender }}</td>
                               <td> @if(!empty($user->date_of_birth))
                                 {{ date('d-m-y',strtotime($user->date_of_birth)) }}

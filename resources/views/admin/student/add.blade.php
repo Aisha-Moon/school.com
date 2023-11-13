@@ -43,7 +43,7 @@
                      </div>
                     <div class="form-group col-md-6">
                         <label for="admission_number">Admission Number <span style="color: red;">*</span> </label>
-                        <input type="text" class="form-control" required id="admission_number" placeholder="Enter Admission Number" name="admission_number" value="{{ old('addmission_number') }}">
+                        <input type="text" class="form-control" required id="admission_number" placeholder="Enter Admission Number" name="admission_number" value="{{ old('admission_number') }}">
                         <div style="color:red;">{{ $errors->first('admission_number') }}</div>
 
                      </div>

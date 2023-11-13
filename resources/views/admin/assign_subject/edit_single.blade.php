@@ -53,8 +53,8 @@
                   <div class="form-group">
                     <label for="status">Status</label>
                     <select name="status" class="form-control">
-                        <option value="0" {{ ($getRecord->status=0)?'selected' : '' }}>Active</option>
-                        <option value="1" {{ ($getRecord->status=1)?'selected' : '' }}>Inactive</option>
+                        <option value="0" {{ ($getRecord->status==0)?'selected' : '' }}>Active</option>
+                        <option value="1" {{ ($getRecord->status==1)?'selected' : '' }}>Inactive</option>
                     </select>
 
                   </div>

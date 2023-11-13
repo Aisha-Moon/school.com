@@ -13,7 +13,7 @@ class ClassSubject extends Model
     static public function getRecord(){
         $return =self::select('class_subjects.*','class.name as class_name','subjects.name as subject_name','users.name as created_by_name')
                     ->join('subjects','subjects.id','=','class_subjects.subject_id')
-                    ->join('class','class_id','=','class_subjects.class_id')
+                    ->join('class','class.id','=','class_subjects.class_id')
                     ->join('users','users.id','=','class_subjects.created_by')
                     ->where('class_subjects.is_delete','=',0);
                     if(!empty(Request::get('subject_name'))){
@@ -44,5 +44,17 @@ static public function getSingle($id){
       }
       static public function deleteSubject($class_id){
         return self::where('class_id','=',$class_id)->delete();
+      }
+      static public function mySubject($class_id){
+
+      return self::select('class_subjects.*','subjects.name as subject_name','subjects.type as subject_type')
+      ->join('subjects','subjects.id','=','class_subjects.subject_id')
+      ->join('class','class.id','=','class_subjects.class_id')
+      ->join('users','users.id','=','class_subjects.created_by')
+      ->where('class_subjects.class_id','=',$class_id)
+      ->where('class_subjects.is_delete','=',0)
+      ->where('class_subjects.status','=',0)
+     ->orderBy('class_subjects.id','desc')->get();
+
       }
 }

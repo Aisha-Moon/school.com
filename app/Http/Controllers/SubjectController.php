@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClassSubject;
 use App\Models\Subject;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +20,7 @@ class SubjectController extends Controller
         return view('admin.subject.add',$data);
     }
     public function insert(Request $request){
-        
+
         $subject=new Subject();
         $subject->name=trim($request->name);
         $subject->type=trim($request->type);
@@ -54,5 +56,24 @@ class SubjectController extends Controller
         $subject->is_delete=1;
         $subject->save();
         return redirect()->back()->with('success','Subject deleted Successfully');
+    }
+    public function mySubject(){
+
+        $data['getRecord']=ClassSubject::mySubject(Auth::user()->class_id);
+
+
+        $data['header_title']='My Subject ';
+        return view('student.my_subject',$data);
+    }
+    public function parentStudentSubject($student_id){
+        $user=User::getSingle($student_id);
+        $data['getUser']=$user;
+        $data['getRecord']=ClassSubject::mySubject($user->class_id);
+
+        $data['header_title']='My Subject ';
+        return view('parent.my_student_subject',$data);
+
+
+
     }
 }

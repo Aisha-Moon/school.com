@@ -34,6 +34,7 @@ class AuthController extends Controller
         return view('auth.login');
     }
     public function Authlogin(Request $request){
+
         $remember=!empty($request->remember)?true:false;
        if(Auth::attempt(['email'=>$request->email,'password'=>$request->password],$remember)){
 

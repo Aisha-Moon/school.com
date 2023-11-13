@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ClassModel;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -150,11 +151,16 @@ class StudentController extends Controller
 
             $getRecord->is_delete=1;
             $getRecord->save();
-            
+
             return redirect('admin/student/list')->with('success','Student Deleted successfully');
         }else{
             abort(404);
         }
 
+    }
+    public function myStudent(){
+        $data['header_title']='My Student List';
+        $data['getRecord']=User::getTeacherStudent(Auth::user()->id);
+        return view('teacher.my_student',$data);
     }
 }

@@ -157,10 +157,20 @@ class User extends Authenticatable
        return $return;
 
     }
+    static public function getTeacherClass(){
+        $return= self::select('users.*')
+        ->where('user_type',2)
+        ->where('is_delete',0);
+
+
+       $return=$return->orderBy('id','desc')->get();
+       return $return;
+
+    }
     static public function getMyStudent($parent_id){
 
         $return= self::select('users.*','class.name as class_name','parent.name as parent_name')
-        ->join('users as parent','parent.id','=','users.parent_id','left')
+        ->join('users as parent','parent.id','=','users.parent_id')
         ->join('class','class.id','=','users.class_id','left')
         ->where('users.user_type','=',3)
         ->where('users.parent_id','=',$parent_id)
@@ -228,6 +238,30 @@ class User extends Authenticatable
         }
 
        $return=$return->orderBy('users.id','desc')->paginate(10);
+       return $return;
+    }
+    static public function getStudentClass($class_id){
+        return self::select('users.id','users.name','users.last_name')
+        ->where('users.user_type',3)
+        ->where('users.class_id',$class_id)
+        ->where('users.is_delete',0)
+        ->orderBy('users.id','desc')->get();
+       }
+
+    static public function getTeacherStudent($teacher_id){
+        $return= self::select('users.*','class.name as class_name')
+        ->join('class','class.id','=','users.class_id')
+        ->join('assign_class_teachers','assign_class_teachers.class_id','=','class.id')
+        ->where('assign_class_teachers.teacher_id','=',$teacher_id)
+        ->where('assign_class_teachers.status','=',0)
+        ->where('assign_class_teachers.is_delete','=',0)
+         ->where('users.user_type',3)
+        ->where('users.is_delete',0);
+
+
+       $return=$return->orderBy('users.id','desc')
+        //  ->groupBy('users.id')
+         ->paginate(10);
        return $return;
     }
     static public function getSearchStudent(){
