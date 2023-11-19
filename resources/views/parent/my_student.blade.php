@@ -96,11 +96,14 @@
                             <td>{{ $user->height }}</td>
                             <td>{{ $user->weight }}</td>
                             <td>{{ date('d-m-y ,H:i A',strtotime($user->created_at)) }}</td>
-                           <td style="min-width:500px;">
-                            <a class="btn btn-primary btn-sm" href="{{ url('parent/my_student/subject/'.$user->id) }}">Subject</a>
-                            <a class="btn btn-info btn-sm" href="{{ url('parent/my_student/exam_timetable/'.$user->id) }}">Exam Timetable</a>
-                            <a class="btn btn-secondary btn-sm" href="{{ url('parent/my_student/exam_result/'.$user->id) }}">Exam Result</a>
-                            <a class="btn btn-success btn-sm" href="{{ url('parent/my_student/calendar/'.$user->id) }}">Calendar</a>
+                           <td style="min-width:300px;">
+                            <a style="margin-bottom: 10px;" class="btn btn-primary btn-sm" href="{{ url('parent/my_student/subject/'.$user->id) }}">Subject</a>
+                            <a style="margin-bottom: 10px;" class="btn btn-info btn-sm" href="{{ url('parent/my_student/exam_timetable/'.$user->id) }}">Exam Timetable</a>
+                            <a style="margin-bottom: 10px;" class="btn btn-secondary btn-sm" href="{{ url('parent/my_student/exam_result/'.$user->id) }}">Exam Result</a>
+                            <a style="margin-bottom: 10px;" class="btn btn-success btn-sm" href="{{ url('parent/my_student/calendar/'.$user->id) }}">Calendar</a>
+                            <a style="margin-bottom: 10px;" class="btn btn-warning btn-sm" href="{{ url('parent/my_student_attendance/'.$user->id) }}">Attendance</a>
+                            <a style="margin-bottom: 10px;" class="btn btn-info btn-sm" href="{{ url('parent/my_student_homework/'.$user->id) }}">Homework</a>
+                            <a style="margin-bottom: 10px;" class="btn btn-success btn-sm" href="{{ url('parent/my_student_submitted_homework/'.$user->id) }}">submitted Homework</a>
                            </td>
                         </tr>
                       @endforeach
@@ -118,9 +121,6 @@
           <!-- /.col -->
         </div>
         </div>
-        <!-- /.row -->
-
-        <!-- /.row -->
 
     </section>
     <!-- /.content -->

@@ -130,7 +130,7 @@ padding:10px;
                                     Class Work
                                     <input type="hidden" name="mark[{{ $i }}][full_marks]" class="form-control" value="{{ $subject->full_marks }}" >
                                     <input type="hidden" name="mark[{{ $i }}][pass_marks]" class="form-control" value="{{ $subject->pass_marks }}" >
-                                    
+
                                     <input type="hidden" name="mark[{{ $i }}][id]" class="form-control" value="{{ $subject->id }}" >
                                     <input type="hidden" name="mark[{{ $i }}][subject_id]" class="form-control" value="{{ $subject->subject_id }}" >
                                    <input type="text" name="mark[{{ $i }}][class_work]" id="class_work_{{ $student->id }}{{ $subject->subject_id }}" class="form-control" value="{{ !empty($getMark->class_work) ? $getMark->class_work : ''  }}" placeholder="Enter Marks" >
@@ -157,14 +157,22 @@ padding:10px;
                                         <b>Passing mark :</b> {{ $subject->pass_marks }}
                                         <br>
                                             @if ($totalMark>=$subject->pass_marks)
-                                            <span style="color:green;font-weight:bold;">Passed</span>
+                                            <span style="color:green;font-weight:bold;">Passed</span><br>
                                             @else
-                                            <span style="color:red;font-weight:bold;">Failed</span>
+                                            <span style="color:red;font-weight:bold;">Failed</span><br>
                                                 @php
                                                     $pass_fail_valid=1;
                                                 @endphp
 
                                             @endif
+                                            @php
+                                            $getLoopGrade=App\Models\MarksGrade::getGrade($totalMark);
+
+                                          @endphp
+                                          @if (!empty($getLoopGrade) )
+                                              <b>Grade :</b> {{ $getLoopGrade }}
+
+                                          @endif
                                     </div>
                               @endif
 
@@ -184,15 +192,25 @@ padding:10px;
                                     @php
                                         $percentage=($totalStudentMark * 100)/ $totalFullMark;
                                     @endphp
-                                    <br>
+
                                     <b>Percentage :</b> {{ round($percentage,2) }}% <br>
                                     @if ($pass_fail_valid==0)
-                                    <b>Result : </b><span style="color:green;font-weight:bold;">Passed</span>
+                                    <b>Result : </b><span style="color:green;font-weight:bold;">Passed</span><br>
 
                                     @else
-                                    <b>Result : </b><span style="color:red;font-weight:bold;">Failed</span>
+                                    <b>Result : </b><span style="color:red;font-weight:bold;">Failed</span><br>
 
                                     @endif
+                                    @php
+                                        $percentage=($totalStudentMark * 100)/ $totalFullMark;
+                                        $getGrade=App\Models\MarksGrade::getGrade($percentage);
+                                     @endphp
+                                @if(!empty($getGrade))
+
+                                    <b>Grade :</b> {{ $getGrade }}<br>
+
+
+                                @endif
                                @endif
 
                             </td>

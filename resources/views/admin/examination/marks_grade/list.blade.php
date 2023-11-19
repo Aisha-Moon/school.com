@@ -16,17 +16,10 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
-    <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="col-md-12">
-
         </div>
-
-
-
-          <!-- /.col -->
           <div class="col-md-12">
             @if(!empty(session('error')))
             <div class="alert alert-danger " role="alert">
@@ -38,8 +31,6 @@
               {{ session('success') }}
           </div>
           @endif
-
-            <!-- /.card -->
 
             <div class="card">
               <div class="card-header">
@@ -60,6 +51,20 @@
                     </tr>
                   </thead>
                   <tbody>
+                    @foreach ($getRecord as $user)
+                    <tr>
+
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->percent_from}}</td>
+                        <td>{{ $user->percent_to}}</td>
+                        <td>{{ $user->created_by}}</td>
+                        <td>{{ date('d-m-y ,H:i A',strtotime($user->created_at)) }}</td>
+                        <td>
+                            <a href="{{ url('admin/examinations/marks_grade_edit/'.$user->id) }}" class="btn btn-primary">Edit</a>
+                            <a href="{{ url('admin/examinations/exam/delete'.$user->id) }}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                  @endforeach
 
                   </tbody>
                 </table>
@@ -70,9 +75,6 @@
           </div>
           <!-- /.col -->
         </div>
-        <!-- /.row -->
-
-        <!-- /.row -->
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->

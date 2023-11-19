@@ -44,6 +44,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    static public function SearchUser($search){
+        $return=self::select('users.*');
+        $return=$return->where(function($query) use ($search){
+            $query->where('users.name','like','%'.$search.'%')
+                  ->orWhere('users.last_name','like','%'.$search.'%');
+        })
+        ->limit(10)
+        ->get();
+        return $return;
+    }
     static public function getEmailSingle($email){
         return self::where('email',$email)->first();
     }
@@ -66,6 +76,12 @@ class User extends Authenticatable
        $return=$return->orderBy('id','desc')->paginate(2);
        return $return;
 
+    }
+    static public function getUser($user_type){
+        return self::select('users.*')
+        ->where('user_type',$user_type)
+        ->where('is_delete',0)
+        ->get();
     }
     static public function getParent(){
         $return= self::select('users.*')
@@ -298,5 +314,8 @@ class User extends Authenticatable
     }else{
         return "";
     }
+  }
+  static public function getAttendance($student_id,$class_id,$attendance_date){
+    return StudentAttendance::CheckAlreadyAttendance($student_id,$class_id,$attendance_date);
   }
 }

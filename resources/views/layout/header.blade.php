@@ -251,11 +251,85 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ url('admin/examinations/marks_grade') }}" class="nav-link @if(Request::segment(3)=='marks_grade') active @endif">
+                    <a href="{{ url('admin/examinations/marks_grade/list') }}" class="nav-link @if(Request::segment(3)=='marks_grade') active @endif">
                         <i class="far fa-circle nav-icon"></i>
                       <p>Marks Grade</p>
                     </a>
                   </li>
+
+                </ul>
+              </li>
+              <li class="nav-item @if(Request::segment(2)=='attendance' ) menu-is-opening menu-open @endif">
+                <a href="#" class="nav-link @if(Request::segment(2)=='attendance')  active @endif">
+                  <i class="nav-icon fas fa-table"></i>
+                  <p>
+                    Attendance
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ url('admin/attendance/student') }}" class="nav-link @if(Request::segment(3)=='student') active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                      <p>Student Attendance</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ url('admin/attendance/report') }}" class="nav-link @if(Request::segment(3)=='report') active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                      <p>Attendance Report</p>
+                    </a>
+                  </li>
+
+
+                </ul>
+              </li>
+              <li class="nav-item @if(Request::segment(2)=='communicate' ) menu-is-opening menu-open @endif">
+                <a href="#" class="nav-link @if(Request::segment(2)=='communicate')  active @endif">
+                  <i class="nav-icon fas fa-table"></i>
+                  <p>
+                    Communicate
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ url('admin/communicate/notice_board') }}" class="nav-link @if(Request::segment(3)=='notice_board') active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                      <p>Notice Board</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ url('admin/communicate/send_email') }}" class="nav-link @if(Request::segment(3)=='send_email') active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                      <p>Send Email</p>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+              <li class="nav-item @if(Request::segment(2)=='homework' ) menu-is-opening menu-open @endif">
+                <a href="#" class="nav-link @if(Request::segment(2)=='homework')  active @endif">
+                  <i class="nav-icon fas fa-table"></i>
+                  <p>
+                    Homework
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ url('admin/homework/homework') }}" class="nav-link @if(Request::segment(3)=='homework') active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                      <p>Homework</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ url('admin/homework/homework_report') }}" class="nav-link @if(Request::segment(3)=='homework_report') active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                      <p>Homework Report</p>
+                    </a>
+                  </li>
+
 
                 </ul>
               </li>
@@ -322,6 +396,57 @@
 
                   </p>
                 </a>
+              </li>
+              <li class="nav-item @if(Request::segment(2)=='homework' ) menu-is-opening menu-open @endif">
+                <a href="#" class="nav-link @if(Request::segment(2)=='homework')  active @endif">
+                  <i class="nav-icon fas fa-table"></i>
+                  <p>
+                    Homework
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ url('teacher/homework/homework') }}" class="nav-link @if(Request::segment(3)=='homework') active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                      <p>Homework</p>
+                    </a>
+                  </li>
+
+
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('teacher/my_notice_board') }}" class="nav-link @if(Request::segment(2)=='my_notice_board') active @endif">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    My Notice Board
+
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item @if(Request::segment(2)=='attendance' ) menu-is-opening menu-open @endif">
+                <a href="#" class="nav-link @if(Request::segment(2)=='attendance')  active @endif">
+                  <i class="nav-icon fas fa-table"></i>
+                  <p>
+                    Attendance
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ url('teacher/attendance/student') }}" class="nav-link @if(Request::segment(3)=='student') active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                      <p>Student Attendance</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ url('teacher/attendance/report') }}" class="nav-link @if(Request::segment(3)=='report') active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                      <p>Attendance Report</p>
+                    </a>
+                  </li>
+                </ul>
               </li>
 
                <li class="nav-item">
@@ -397,6 +522,42 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{ url('student/my_attendance') }}" class="nav-link @if(Request::segment(2)=='my_attendance') active @endif">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    My Attendance
+
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('student/my_homework') }}" class="nav-link @if(Request::segment(2)=='my_homework') active @endif">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    My Homework
+
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('student/my_submitted_homework') }}" class="nav-link @if(Request::segment(2)=='my_submitted_homework') active @endif">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    Submitted Homework
+
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('student/my_notice_board') }}" class="nav-link @if(Request::segment(2)=='my_notice_board') active @endif">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    My Notice Board
+
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{ url('student/account') }}" class="nav-link @if(Request::segment(2)=='account') active @endif">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
@@ -433,6 +594,24 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{ url('parent/my_student_notice_board') }}" class="nav-link @if(Request::segment(2)=='my_student_notice_board') active @endif">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    My Student Notice Board
+
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('parent/my_notice_board') }}" class="nav-link @if(Request::segment(2)=='my_notice_board') active @endif">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    My Notice Board
+
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{ url('parent/my-student') }}" class="nav-link @if(Request::segment(2)=='my-student') active @endif">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
@@ -441,6 +620,7 @@
                   </p>
                 </a>
               </li>
+
               <li class="nav-item">
                 <a href="{{ url('parent/change_password') }}" class="nav-link @if(Request::segment(2)=='change_password') active @endif">
                   <i class="nav-icon far fa-user"></i>

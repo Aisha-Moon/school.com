@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AssignClassTeacherController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ClassController;
@@ -13,6 +14,8 @@ use App\Http\Controllers\ParentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\CommunicateController;
+use App\Http\Controllers\HomeworkController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -139,12 +142,37 @@ Route::post('admin/examinations/submit_marks_register', [ExamintaionController::
 Route::post('admin/examinations/single_submit_marks_register', [ExamintaionController::class,'single_submit_marks_register']);
 
 //marks grade
-Route::get('admin/examinations/marks_grade', [ExamintaionController::class,'marks_grade']);
-// Route::get('admin/examinations/marks_grade_add', [ExamintaionController::class,'marks_grade_add']);
-// Route::post('admin/examinations/marks_grade_add', [ExamintaionController::class,'marks_grade_add']);
-// Route::get('admin/examinations/marks_grade_edit/{id}', [ExamintaionController::class,'marks_grade_edit']);
-// Route::post('admin/examinations/marks_grade_edit/{id}', [ExamintaionController::class,'marks_grade_update']);
-// Route::get('admin/examinations/marks_grade_delete/{id}', [ExamintaionController::class,'marks_grade_delete']);
+Route::get('admin/examinations/marks_grade/list', [ExamintaionController::class,'marks_grade']);
+Route::get('admin/examinations/marks_grade_add', [ExamintaionController::class,'marks_grade_add']);
+Route::post('admin/examinations/marks_grade_add', [ExamintaionController::class,'marks_grade_insert']);
+Route::get('admin/examinations/marks_grade_edit/{id}', [ExamintaionController::class,'marks_grade_edit']);
+Route::post('admin/examinations/marks_grade_edit/{id}', [ExamintaionController::class,'marks_grade_update']);
+Route::get('admin/examinations/marks_grade_delete/{id}', [ExamintaionController::class,'marks_grade_delete']);
+
+//attendance
+Route::get('admin/attendance/student', [AttendanceController::class,'AttendanceStudent']);
+Route::post('admin/attendance/student/save', [AttendanceController::class,'AttendanceStudentSave']);
+Route::get('admin/attendance/report', [AttendanceController::class,'AttendanceReport']);
+Route::get('admin/communicate/notice_board', [CommunicateController::class,'noticeBoard']);
+Route::get('admin/communicate/notice_board/add', [CommunicateController::class,'AddNoticeBoard']);
+Route::post('admin/communicate/notice_board/add', [CommunicateController::class,'InsertNoticeBoard']);
+Route::get('admin/communicate/notice_board/edit/{id}', [CommunicateController::class,'EditNoticeBoard']);
+Route::post('admin/communicate/notice_board/edit/{id}', [CommunicateController::class,'UpdateNoticeBoard']);
+Route::get('admin/communicate/notice_board/delete/{id}', [CommunicateController::class,'DeleteNoticeBoard']);
+Route::get('admin/communicate/send_email', [CommunicateController::class,'SendEmail']);
+Route::post('admin/communicate/send_email', [CommunicateController::class,'SendEmailUser']);
+Route::get('admin/communicate/search_user', [CommunicateController::class,'SearchUser']);
+
+//homework
+Route::get('admin/homework/homework', [HomeworkController::class,'homework']);
+Route::get('admin/homework/homework/add', [HomeworkController::class,'AddHomework']);
+Route::post('admin/homework/homework/add', [HomeworkController::class,'insertHomework']);
+Route::get('admin/homework/homework/edit/{id}', [HomeworkController::class,'EditHomework']);
+Route::post('admin/homework/homework/edit/{id}', [HomeworkController::class,'updateHomework']);
+Route::get('admin/homework/homework/delete/{id}', [HomeworkController::class,'deleteHomework']);
+Route::post('admin/ajax_get_subject', [HomeworkController::class,'ajax_get_subject']);
+Route::get('admin/homework/homework/submitted/{id}', [HomeworkController::class,'submitted']);
+Route::get('admin/homework/homework_report', [HomeworkController::class,'HomeworkReport']);
 
 
 
@@ -161,7 +189,12 @@ Route::group(['middleware'=> 'student'], function () {
         Route::get('student/my_exam_timetable', [ExamintaionController::class,'myExamTimetable']);
         Route::get('student/my_exam_result', [ExamintaionController::class,'myExamResult']);
         Route::get('student/my_calendar', [CalendarController::class,'myCalendar']);
-
+        Route::get('student/my_attendance', [AttendanceController::class,'myAttendanceStudent']);
+        Route::get(' student/my_notice_board', [CommunicateController::class,'myNoticeStudent']);
+        Route::get('student/my_homework', [HomeworkController::class,'HomeworkStudent']);
+        Route::get('student/my_homework/submit_homework/{id}', [HomeworkController::class,'SubmitHomework']);
+        Route::post('student/my_homework/submit_homework/{id}', [HomeworkController::class,'InsertSubmitHomework']);
+        Route::get('student/my_submitted_homework', [HomeworkController::class,'SubmittedHomeworkStudent']);
 
 
 
@@ -183,6 +216,21 @@ Route::group(['middleware'=> 'teacher'], function () {
         Route::post('teacher/submit_marks_register', [ExamintaionController::class,'submit_marks_register']);
         Route::post('teacher/single_submit_marks_register', [ExamintaionController::class,'single_submit_marks_register']);
 
+        Route::get('teacher/attendance/student', [AttendanceController::class,'AttendanceStudentTeacher']);
+        Route::post('teacher/attendance/student/save', [AttendanceController::class,'AttendanceStudentSave']);
+        Route::get('teacher/attendance/report', [AttendanceController::class,'AttendanceReportTeacher']);
+        Route::get('teacher/my_notice_board', [CommunicateController::class,'myNoticeTeacher']);
+
+
+       //homework
+        Route::get('teacher/homework/homework', [HomeworkController::class,'homeworkTeacher']);
+        Route::get('teacher/homework/homework/add', [HomeworkController::class,'AddHomeworkTeacher']);
+        Route::post('teacher/homework/homework/add', [HomeworkController::class,'insertHomeworkTeacher']);
+        Route::get('teacher/homework/homework/edit/{id}', [HomeworkController::class,'EditHomeworkTeacher']);
+        Route::post('teacher/homework/homework/edit/{id}', [HomeworkController::class,'updateHomeworkTeacher']);
+        Route::get('teacher/homework/homework/delete/{id}', [HomeworkController::class,'deleteHomework']);
+        Route::post('teacher/ajax_get_subject', [HomeworkController::class,'ajax_get_subject']);
+        Route::get('teacher/homework/homework/submitted/{id}', [HomeworkController::class,'submittedTeacher']);
 
 
 
@@ -201,6 +249,11 @@ Route::group(['middleware'=> 'parent'], function () {
         Route::get('parent/my_student/exam_timetable/{student_id}', [ExamintaionController::class,'MyExamTimetableparent']);
         Route::get('parent/my_student/exam_result/{student_id}', [ExamintaionController::class,'MyExamResultparent']);
         Route::get('parent/my_student/subject/class_timetable/{class_id}/{subject_id}/{student_id}', [ClassTimetableController::class,'MyTimetableparent']);
+        Route::get('parent/my_student_attendance/{student_id}', [AttendanceController::class,'myAttendanceParent']);
+        Route::get('parent/my_notice_board', [CommunicateController::class,'myNoticeParent']);
+        Route::get('parent/my_student_notice_board', [CommunicateController::class,'myStudentNoticeParent']);
+        Route::get('parent/my_student_homework/{id}', [HomeworkController::class,'HomeworkParent']);
+        Route::get('parent/my_student_submitted_homework/{id}', [HomeworkController::class,'SubmittedHomeworkParent']);
 
 
 });

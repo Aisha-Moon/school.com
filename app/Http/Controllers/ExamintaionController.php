@@ -7,6 +7,7 @@ use App\Models\ClassModel;
 use App\Models\ClassSubject;
 use App\Models\Exam;
 use App\Models\ExamSchedule;
+use App\Models\MarksGrade;
 use App\Models\MarksRegister;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -419,8 +420,47 @@ class ExamintaionController extends Controller
 
       }
       public function marks_grade(){
+        $data['getRecord']=MarksGrade::getRecord() ;
         $data['header_title'] = 'Marks Grade';
         return view('admin.examination.marks_grade.list',$data);
+      }
+      public function marks_grade_add(){
+        $data['header_title'] = 'Add new Marks Grade';
+        return view('admin.examination.marks_grade.add',$data);
+      }
+      public function marks_grade_insert(Request $request){
+        $grade=new MarksGrade();
+        $grade->name=trim($request->name);
+        $grade->percent_from=trim($request->percent_from);
+        $grade->percent_to=trim($request->percent_to);
+        $grade->created_by=Auth::user()->id;
+        $grade->save();
+
+        return redirect('admin/examinations/marks_grade/list')->with('success','Marks grade added successfully');
+      }
+      public function marks_grade_edit($id){
+        $data['getRecord']=MarksGrade::getSingle($id);
+        $data['header_title'] = 'Edit Marks Grade';
+        return view('admin.examination.marks_grade.edit',$data);
+
+      }
+      public function marks_grade_update($id,Request $request){
+        $grade=MarksGrade::getSingle($id);
+        $grade->name=trim($request->name);
+        $grade->percent_from=trim($request->percent_from);
+        $grade->percent_to=trim($request->percent_to);
+        $grade->created_by=Auth::user()->id;
+        $grade->save();
+
+        return redirect('admin/examinations/marks_grade/list')->with('success','Marks grade updated successfully');
+
+      }
+      public function marks_grade_delete($id){
+        $grade=MarksGrade::getSingle($id);
+        $grade->delete();
+        return redirect('admin/examinations/marks_grade/list')->with('success','Marks grade deleted successfully');
+
+
       }
 
 }

@@ -150,18 +150,28 @@ padding:10px;
                                   <button type="button" class="btn btn-primary SaveSingleSubject" id="{{ $student->id }}" data-val="{{ $subject->subject_id }}"
                                     data-exam="{{ Request::get('exam_id') }}" data-class="{{ Request::get('class_id') }}" data-schedule="{{ $subject->id }}">Save</button>
                                 </div>
+
                               @if(!empty($getMark))
                                     <div style="margin-bottom:10px;">
                                         <b>Total Mark :</b>{{ $totalMark }} <br>
-                                        <b>Passing mark :</b> {{ $subject->pass_marks }}
-                                        <br>
+                                        <b>Passing mark :</b> {{ $subject->pass_marks }} <br>
+
+
                                             @if ($totalMark>=$subject->pass_marks)
-                                            <span style="color:green;font-weight:bold;">Passed</span>
+                                            <span style="color:green;font-weight:bold;">Passed</span><br>
                                             @else
-                                            <span style="color:red;font-weight:bold;">Failed</span>
+                                            <span style="color:red;font-weight:bold;">Failed</span><br>
                                                 @php
                                                     $pass_fail_valid=1;
                                                 @endphp
+
+                                            @endif
+                                            @php
+                                              $getLoopGrade=App\Models\MarksGrade::getGrade($totalMark);
+
+                                            @endphp
+                                            @if (!empty($getLoopGrade) )
+                                                <b>Grade :</b> {{ $getLoopGrade }}
 
                                             @endif
                                     </div>
@@ -180,11 +190,17 @@ padding:10px;
                                     <b>Total Marks : </b>{{ $totalFullMark }} <br>
                                     <b>Total Passing Marks : </b>{{ $totalPassMark }} <br>
                                     <b>Obtained Marks : </b> {{ $totalStudentMark }} <br>
+
+
+                                    <b>Percentage :</b> {{ round($percentage,2) }}% <br>
                                     @php
                                         $percentage=($totalStudentMark * 100)/ $totalFullMark;
-                                    @endphp
-                                    <br>
-                                    <b>Percentage :</b> {{ round($percentage,2) }}% <br>
+                                        $getGrade=App\Models\MarksGrade::getGrade($percentage);
+                                   @endphp
+                                    @if(!empty($getGrade))
+
+                                      <b>Grade :</b> {{ $getGrade }}<br>
+                                    @endif
                                     @if ($pass_fail_valid==0)
                                     <b>Result : </b><span style="color:green;font-weight:bold;">Passed</span>
 
