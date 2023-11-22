@@ -104,6 +104,7 @@
                             <a style="margin-bottom: 10px;" class="btn btn-warning btn-sm" href="{{ url('parent/my_student_attendance/'.$user->id) }}">Attendance</a>
                             <a style="margin-bottom: 10px;" class="btn btn-info btn-sm" href="{{ url('parent/my_student_homework/'.$user->id) }}">Homework</a>
                             <a style="margin-bottom: 10px;" class="btn btn-success btn-sm" href="{{ url('parent/my_student_submitted_homework/'.$user->id) }}">submitted Homework</a>
+                            <a style="margin-bottom: 10px;" class="btn btn-secondary btn-sm" href="{{ url('parent/my_student/fees_collection/'.$user->id) }}">Fees Collection</a>
                            </td>
                         </tr>
                       @endforeach
