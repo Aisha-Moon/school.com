@@ -190,6 +190,8 @@ class UserController extends Controller
     public function UpdateSetting(Request $request){
         $setting=Setting::getSingle();
         $setting->paypal_email=trim($request->paypal_email);
+        $setting->stripe_key=trim($request->stripe_key);
+        $setting->stripe_secret=trim($request->stripe_secret);
         $setting->save();
         return redirect()->back()->with('success','Settings updated successfully');
 
