@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -162,7 +163,7 @@ class UserController extends Controller
         $user=User::getSingle($id);
         $user->name=trim($request->name);
         $user->email=trim($request->email);
-       
+
         $user->save();
         return redirect()->back()->with('success','Account updated Successfully');
     }
@@ -179,5 +180,18 @@ class UserController extends Controller
         }else{
             return redirect()->back()->with('error','Old password is incorrect');
         }
+    }
+    public function Setting(){
+        $data['getRecord']=Setting::getSingle();
+        $data['header_title']='My Settings';
+        return view('admin.my_setting',$data);
+
+    }
+    public function UpdateSetting(Request $request){
+        $setting=Setting::getSingle();
+        $setting->paypal_email=trim($request->paypal_email);
+        $setting->save();
+        return redirect()->back()->with('success','Settings updated successfully');
+
     }
 }

@@ -15,6 +15,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\CommunicateController;
+use App\Http\Controllers\FeesCollectionController;
 use App\Http\Controllers\HomeworkController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -173,6 +174,11 @@ Route::get('admin/homework/homework/delete/{id}', [HomeworkController::class,'de
 Route::post('admin/ajax_get_subject', [HomeworkController::class,'ajax_get_subject']);
 Route::get('admin/homework/homework/submitted/{id}', [HomeworkController::class,'submitted']);
 Route::get('admin/homework/homework_report', [HomeworkController::class,'HomeworkReport']);
+Route::get('admin/fees_collection/collect_fees', [FeesCollectionController::class,'CollectFees']);
+Route::get('admin/fees_collection/collect_fees/add_fees/{student_id}', [FeesCollectionController::class,'AddCollectFees']);
+Route::post('admin/fees_collection/collect_fees/add_fees/{student_id}', [FeesCollectionController::class,'InsertCollectFees']);
+Route::get('admin/setting', [UserController::class,'Setting']);
+Route::post('admin/setting', [UserController::class,'UpdateSetting']);
 
 
 
@@ -195,6 +201,10 @@ Route::group(['middleware'=> 'student'], function () {
         Route::get('student/my_homework/submit_homework/{id}', [HomeworkController::class,'SubmitHomework']);
         Route::post('student/my_homework/submit_homework/{id}', [HomeworkController::class,'InsertSubmitHomework']);
         Route::get('student/my_submitted_homework', [HomeworkController::class,'SubmittedHomeworkStudent']);
+        Route::get('student/fees_collection', [FeesCollectionController::class,'CollectFeesStudent']);
+        Route::post('student/fees_collection', [FeesCollectionController::class,'CollectFeesStudentPayment']);
+        Route::get('student/paypal/payment_error', [FeesCollectionController::class,'PaymentError']);
+        Route::get('student/paypal/payment_success', [FeesCollectionController::class,'PaymentSuccess']);
 
 
 

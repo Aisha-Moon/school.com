@@ -79,6 +79,7 @@
                     <tr>
                       <th>Id</th>
                       <th>Class Name</th>
+                      <th>Amount</th>
                       <th>Status</th>
                       <th>Created By</th>
                       <th>Created Date</th>
@@ -90,6 +91,7 @@
                     <tr>
                         <td>{{ $class->id }}</td>
                         <td>{{ $class->name }}</td>
+                        <td>${{ number_format($class->amount,2) }}</td>
                        <td>
                         @if ($class->status==0)
                         Active

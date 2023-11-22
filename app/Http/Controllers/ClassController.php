@@ -23,6 +23,7 @@ class ClassController extends Controller
 
        $class=new ClassModel;
        $class->name=$request->name;
+       $class->amount=$request->amount;
        $class->status=$request->status;
        $class->created_by=Auth::user()->id;
        $class->save();
@@ -44,6 +45,7 @@ class ClassController extends Controller
     public function update($id,Request $request){
         $class=ClassModel::getSingle($id);
         $class->name=$request->name;
+        $class->amount=$request->amount;
         $class->status=$request->status;
         $class->save();
         return redirect('admin/class/list')->with('success','Class updated Successfully');

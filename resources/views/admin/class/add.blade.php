@@ -34,6 +34,11 @@
 
                   </div>
                   <div class="form-group">
+                    <label for="am">Amount ($)</label>
+                    <input type="number" class="form-control" id="am" placeholder="Enter Amount" name="amount" >
+
+                  </div>
+                  <div class="form-group">
                     <label for="status">Status</label>
                     <select name="status" class="form-control">
                         <option value="0">Active</option>
@@ -41,9 +46,6 @@
                     </select>
 
                   </div>
-
-
-
 
                 </div>
                 <!-- /.card-body -->
@@ -53,16 +55,7 @@
                 </div>
               </form>
             </div>
-            <!-- /.card -->
-
-
-
-
           </div>
-          <!--/.col (left) -->
-          <!-- right column -->
-
-          <!--/.col (right) -->
         </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->
