@@ -25,10 +25,10 @@
 
               <!-- /.card-header -->
               <!-- form start -->
-              <form method="post" action="">
+              <form method="post" action="" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="card-body">
-                  <div class="form-group">
+                  <div class="form-group" >
                     <label for="exampleInputEmail1">Name</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" name="name" value="{{ old('name') }}">
 
@@ -42,9 +42,11 @@
                     <label for="exampleInputPassword1">Password</label>
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter Password" name="password">
                   </div>
-
-
-
+                  <div class="form-group">
+                    <label for="profile_pic">Profile Pic <span style="color: red;"></span> </label>
+                    <input type="file" class="form-control"  id="profile_pic"  name="profile_pic" required>
+                    <div style="color:red;">{{ $errors->first('profile_pic') }}</div>
+                 </div>
                 </div>
                 <!-- /.card-body -->
 

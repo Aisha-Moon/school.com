@@ -32,7 +32,7 @@
           @endif
             <!-- general form elements -->
             <div class="card card-primary">
-              <form method="post" action="">
+              <form method="post" action="" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="card-body">
 
@@ -48,6 +48,20 @@
                     <label for="Emai">Stripe Secret Key</label>
                     <input type="text" class="form-control" id="Emai"  placeholder="Stripe Secret Key" name="stripe_secret" value="{{ $getRecord->stripe_secret }}">
                   </div>
+                  <div class="form-group">
+                    <label>Logo <span style="color: red;"></span> </label>
+                    <input type="file" class="form-control"   name="logo" >
+                    @if(!empty($getRecord->getLogo()))
+                    <img src="{{ $getRecord->getLogo() }}" style="width: auto;height:50px;" alt="">
+                    @endif
+                 </div>
+                  <div class="form-group">
+                    <label>Fevicon Icon <span style="color: red;"></span> </label>
+                    <input type="file" class="form-control"   name="fevicon_icon" >
+                        @if(!empty($getRecord->getFeviconIcon()))
+                        <img src="{{ $getRecord->getFeviconIcon() }}" style="width: auto;height:50px;" alt="">
+                        @endif
+                 </div>
 
                 </div>
                 <div class="card-footer">

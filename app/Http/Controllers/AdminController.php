@@ -19,6 +19,8 @@ class AdminController extends Controller
         return view('admin.admin.add',$data);
     }
     public function insert(Request $request){
+        // Debugging statements
+
         $request->validate([
             'email'=> 'required|email|unique:users',
         ]);
@@ -28,7 +30,16 @@ class AdminController extends Controller
         $user->email=trim($request->email);
         $user->password=Hash::make($request->password);
         $user->user_type=1;
+        if(!empty($request->file('profile_pic'))){
+            $file=$request->file('profile_pic');
+            $extension=$file->getClientOriginalExtension();
+            $filename=time().'.'.$extension;
+            $file->move('users/images',$filename);
+            $user->profile_pic=$filename;
+
+        }
         $user->save();
+
         return redirect('admin/admin/list')->with('success','Admin successfully created');
 
 
@@ -42,8 +53,6 @@ class AdminController extends Controller
         }else{
             abort(404);
         }
-
-
     }
     public function update($id,Request $request){
         $request->validate([
@@ -55,6 +64,19 @@ class AdminController extends Controller
         if(!empty($request->password)){
         $user->password=Hash::make($request->password);
         }
+        if(!empty($request->file('profile_pic'))){
+            if(!empty($user->getProfilepic())){
+                unlink('users/images/'.$user->profile_pic);
+            }
+            $file=$request->file('profile_pic');
+            $extension=$file->getClientOriginalExtension();
+            $filename=time().'.'.$extension;
+            $file->move('users/images',$filename);
+            $user->profile_pic=$filename;
+
+
+        }
+
         $user->save();
         return redirect('admin/admin/list')->with('success','Admin updated Successfully');
     }

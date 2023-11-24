@@ -80,8 +80,16 @@ class User extends Authenticatable
         if(!empty(Request::get('date'))){
             $return=$return->where('created_at','like','%'.Request::get('date').'%');
         }
-       $return=$return->orderBy('id','desc')->paginate(2);
+       $return=$return->orderBy('id','desc')->paginate(5);
        return $return;
+
+    }
+    static public function getTotalUser($user_type){
+        return self::select('users.id')
+        ->where('user_type',$user_type)
+        ->where('is_delete',0)->count();
+
+
 
     }
     static public function getUser($user_type){
@@ -206,6 +214,18 @@ class User extends Authenticatable
        return $return;
 
     }
+    static public function getMyStudentCount($parent_id){
+
+        $return= self::select('users.id')
+        ->join('users as parent','parent.id','=','users.parent_id')
+        ->join('class','class.id','=','users.class_id','left')
+        ->where('users.user_type','=',3)
+        ->where('users.parent_id','=',$parent_id)
+        ->where('users.is_delete','=',0)
+        ->count();
+       return $return;
+
+    }
     static public function getSingle($id){
         return self::find($id);
     }
@@ -305,11 +325,22 @@ class User extends Authenticatable
         ->where('assign_class_teachers.is_delete','=',0)
          ->where('users.user_type',3)
         ->where('users.is_delete',0);
-
-
        $return=$return->orderBy('users.id','desc')
-        //  ->groupBy('users.id')
+         ->groupBy('users.id')
          ->paginate(10);
+       return $return;
+    }
+    static public function getTeacherStudentCount($teacher_id){
+        $return= self::select('users.id')
+        ->join('class','class.id','=','users.class_id')
+        ->join('assign_class_teachers','assign_class_teachers.class_id','=','class.id')
+        ->where('assign_class_teachers.teacher_id','=',$teacher_id)
+        ->where('assign_class_teachers.status','=',0)
+        ->where('assign_class_teachers.is_delete','=',0)
+        ->where('users.user_type',3)
+        ->where('users.is_delete',0)
+        ->orderBy('users.id','desc')
+        ->count();
        return $return;
     }
     static public function getSearchStudent(){
@@ -344,10 +375,47 @@ class User extends Authenticatable
         if(!empty($this->profile_pic) && file_exists('users/images/'.$this->profile_pic)){
             return url('users/images/'.$this->profile_pic);
     }else{
-        return "";
+        return '';
+    }
+  }
+    public function getProfileDirect(){
+        if(!empty($this->profile_pic) && file_exists('users/images/'.$this->profile_pic)){
+            return url('users/images/'.$this->profile_pic);
+    }else{
+        return url('users/images/images.jpg');
     }
   }
   static public function getAttendance($student_id,$class_id,$attendance_date){
     return StudentAttendance::CheckAlreadyAttendance($student_id,$class_id,$attendance_date);
+  }
+  static public function getMyStudentId($parent_id){
+    $return= self::select('users.id')
+    ->join('users as parent','parent.id','=','users.parent_id')
+    ->join('class','class.id','=','users.class_id','left')
+    ->where('users.user_type','=',3)
+    ->where('users.parent_id','=',$parent_id)
+    ->where('users.is_delete','=',0)
+    ->orderBy('users.id','desc')
+    ->get();
+   $student_ids=array();
+   foreach($return as $value){
+    $student_ids[]=$value->id;
+   }
+   return $student_ids;
+  }
+  static public function getMyStudentClassId($parent_id){
+    $return= self::select('users.class_id')
+    ->join('users as parent','parent.id','=','users.parent_id')
+    ->join('class','class.id','=','users.class_id')
+    ->where('users.user_type','=',3)
+    ->where('users.parent_id','=',$parent_id)
+    ->where('users.is_delete','=',0)
+    ->orderBy('users.id','desc')
+    ->get();
+   $class_ids=array();
+   foreach($return as $value){
+    $class_ids[]=$value->class_id;
+   }
+   return $class_ids;
   }
 }

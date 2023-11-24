@@ -70,33 +70,6 @@
           <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
       </li>
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-        </div>
-      </li>
 
 
     </ul>
@@ -106,8 +79,11 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="{{asset('admin/')}}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        @if(!empty($getHeaderSetting->getLogo()))
+      <img src="{{ $getHeaderSetting->getLogo() }}" alt="AdminLTE Logo"  style="width:auto;height:50px;border_radius:10px;">
+      @else
       <span class="brand-text font-weight-light">School </span>
+      @endif
     </a>
 
     <!-- Sidebar -->
@@ -115,7 +91,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ Auth::user()->getProfileDirect() }}"  class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">{{ Auth::user()->name }}</a>
@@ -224,7 +200,7 @@
                 </ul>
               </li>
               <li class="nav-item @if(Request::segment(2)=='fees_collection' ) menu-is-opening menu-open @endif">
-                <a href="#" class="nav-link @if(Request::segment(2)=='fees_collection')  active @endif">
+                <a href="#" class="nav-link @if(Request::segment(2)=='fees_collection' ||  Request::segment(2)=='fees_collection_report') active @endif">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
                     Fees Collection
@@ -236,6 +212,12 @@
                     <a href="{{ url('admin/fees_collection/collect_fees') }}" class="nav-link @if(Request::segment(3)=='collect_fees') active @endif">
                         <i class="far fa-circle nav-icon"></i>
                       <p>Collect Fees</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ url('admin/fees_collection/collect_fees_report') }}" class="nav-link @if(Request::segment(3)=='collect_fees_report') active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                      <p>Collect Fees Report</p>
                     </a>
                   </li>
                 </ul>

@@ -68,6 +68,20 @@ class AssignClassTeacher extends Model
         ->where('assign_class_teachers.teacher_id','=',$teacher_id)
         ->get();
       }
+      static public function getMyClassSubjectCount($teacher_id){
+        return AssignClassTeacher::select('assign_class_teachers.id')
+        ->join('class','class.id','=','assign_class_teachers.class_id')
+        ->join('class_subjects','class_subjects.class_id','=','class.id')
+        ->join('subjects','subjects.id','=','class_subjects.subject_id')
+        ->where('assign_class_teachers.is_delete','=',0)
+        ->where('assign_class_teachers.status','=',0)
+        ->where('subjects.status','=',0)
+        ->where('subjects.is_delete','=',0)
+        ->where('class_subjects.status','=',0)
+        ->where('class_subjects.is_delete','=',0)
+        ->where('assign_class_teachers.teacher_id','=',$teacher_id)
+        ->count();
+      }
       static public function getMyClassSubjectGroup($teacher_id){
         return AssignClassTeacher::select('assign_class_teachers.*','class.name as class_name','class.id as class_id')
         ->join('class','class.id','=','assign_class_teachers.class_id')
@@ -76,6 +90,14 @@ class AssignClassTeacher extends Model
         ->where('assign_class_teachers.teacher_id','=',$teacher_id)
         ->groupBy('assign_class_teachers.class_id')
         ->get();
+      }
+      static public function getMyClassSubjectGroupCount($teacher_id){
+        return AssignClassTeacher::select('assign_class_teachers.id')
+        ->join('class','class.id','=','assign_class_teachers.class_id')
+        ->where('assign_class_teachers.is_delete','=',0)
+        ->where('assign_class_teachers.status','=',0)
+        ->where('assign_class_teachers.teacher_id','=',$teacher_id)
+        ->count();
       }
       static public function getMyTimeTable($class_id,$subject_id){
         $getWeek=Week::getWeekUsingName(date('l'));

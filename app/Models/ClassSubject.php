@@ -57,4 +57,17 @@ static public function getSingle($id){
      ->orderBy('class_subjects.id','desc')->get();
 
       }
+      static public function mySubjectCount($class_id){
+
+      return self::select('class_subjects.id')
+      ->join('subjects','subjects.id','=','class_subjects.subject_id')
+      ->join('class','class.id','=','class_subjects.class_id')
+      ->join('users','users.id','=','class_subjects.created_by')
+      ->where('class_subjects.class_id','=',$class_id)
+      ->where('class_subjects.is_delete','=',0)
+      ->where('class_subjects.status','=',0)
+     ->orderBy('class_subjects.id','desc')
+     ->count();
+
+      }
 }

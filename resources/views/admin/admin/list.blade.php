@@ -72,6 +72,8 @@
                       <th>Id</th>
                       <th>Name</th>
                       <th>Email</th>
+                      <th>Profile Pic</th>
+
                       <th>Created Date</th>
                       <th>Action</th>
                     </tr>
@@ -82,6 +84,12 @@
                         <td>{{ $user->id }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
+                        <td>
+                            @if(!empty($user->getProfileDirect()))
+                            <img src="{{ $user->getProfileDirect() }}" alt="" style="height:50px; width:50px;border-radius:50%;">
+                            @endif
+                        </td>
+
                         <td>{{ date('d-m-y ,H:i A',strtotime($user->created_at)) }}</td>
                         <td>
                             <a href="{{ url('admin/admin/edit/'.$user->id) }}" class="btn btn-primary">Edit</a>

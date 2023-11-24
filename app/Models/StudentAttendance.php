@@ -111,6 +111,20 @@ class StudentAttendance extends Model
             ->paginate(10);
             return $return;
  }
+ static public function getRecordStudentCount($student_id){
+    $return= self::select('student_attendances.id')
+            ->join('class','class.id','=','student_attendances.class_id')
+            ->where('student_attendances.student_id','=',$student_id)
+            ->count();
+    return $return;
+ }
+ static public function getRecordStudentCountParent($student_ids){
+    $return= self::select('student_attendances.id')
+            ->join('class','class.id','=','student_attendances.class_id')
+            ->whereIn('student_attendances.student_id',$student_ids)
+            ->count();
+    return $return;
+ }
  static public function getMyClassStudent($student_id){
     return self::select('student_attendances.*','class.name as class_name')
     ->join('class','class.id','=','student_attendances.class_id')

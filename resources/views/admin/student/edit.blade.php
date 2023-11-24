@@ -113,8 +113,6 @@
                          <img src="{{ $getRecord->getProfilepic() }}" alt="" style="height:100px;">
                         @endif
 
-
-
                      </div>
                      <div class="form-group col-md-6">
                         <label for="blood_group">Blood Group <span style="color: red;"></span> </label>

@@ -60,7 +60,7 @@
                         <td>{{ $value->payment_type }}</td>
                         <td>{{ $value->remark }}</td>
                         <td>{{ $value->created_name }}</td>
-                        <td>{{ date('d-m-y', strtotime($value->created_date)) }}</td>
+                        <td>{{ date('d-m-Y', strtotime($value->created_date)) }}</td>
                     </tr>
                 @empty
                     <tr>

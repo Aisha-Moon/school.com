@@ -159,8 +159,8 @@
                           <tr>
                               <td>{{ $user->id }}</td>
                               <td>
-                                  @if(!empty($user->getProfilepic()))
-                                  <img src="{{ $user->getProfilepic() }}" alt="" style="height:100px;width:100px;border-radius:50%;">
+                                  @if(!empty($user->getProfileDirect()))
+                                  <img src="{{ $user->getProfileDirect() }}" alt="" style="height:100px;width:100px;border-radius:50%;">
                                   @endif
                               </td>
                               <td>{{ $user->name }} {{ $user->last_name }}</td>

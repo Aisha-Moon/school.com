@@ -192,6 +192,23 @@ class UserController extends Controller
         $setting->paypal_email=trim($request->paypal_email);
         $setting->stripe_key=trim($request->stripe_key);
         $setting->stripe_secret=trim($request->stripe_secret);
+        if(!empty($request->file('logo'))){
+            $file=$request->file('logo');
+            $extension=$file->getClientOriginalExtension();
+            $filename=time().'.'.$extension;
+            $file->move('users/settings',$filename);
+            $setting->logo=$filename;
+
+        }
+        if(!empty($request->file('fevicon_icon'))){
+            $file=$request->file('fevicon_icon');
+            $extension=$file->getClientOriginalExtension();
+            $fevicon=time().'.'.$extension;
+            $file->move('users/settings',$fevicon);
+            $setting->fevicon_icon=$fevicon;
+
+        }
+      
         $setting->save();
         return redirect()->back()->with('success','Settings updated successfully');
 

@@ -117,6 +117,8 @@
                 <option value="">Select</option>
                 <option value="cash">Cash</option>
                 <option value="cheque">Cheque</option>
+                <option value="Paypal">Paypal</option>
+                <option value="Stripe">Stripe</option>
             </select>
           </div>
           <div class="form-group">

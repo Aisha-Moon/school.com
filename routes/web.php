@@ -175,6 +175,7 @@ Route::post('admin/ajax_get_subject', [HomeworkController::class,'ajax_get_subje
 Route::get('admin/homework/homework/submitted/{id}', [HomeworkController::class,'submitted']);
 Route::get('admin/homework/homework_report', [HomeworkController::class,'HomeworkReport']);
 Route::get('admin/fees_collection/collect_fees', [FeesCollectionController::class,'CollectFees']);
+Route::get('admin/fees_collection/collect_fees_report', [FeesCollectionController::class,'CollectFeesReport']);
 Route::get('admin/fees_collection/collect_fees/add_fees/{student_id}', [FeesCollectionController::class,'AddCollectFees']);
 Route::post('admin/fees_collection/collect_fees/add_fees/{student_id}', [FeesCollectionController::class,'InsertCollectFees']);
 Route::get('admin/setting', [UserController::class,'Setting']);

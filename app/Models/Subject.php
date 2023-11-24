@@ -38,6 +38,14 @@ class Subject extends Model
         ->where('subjects.is_delete','=',0)
         ->where('subjects.status','=',0)
         ->orderBy('subjects.name','asc')->get();
-return $return;
+            return $return;
+      }
+      static public function totalSubject(){
+        $return=Subject::select('subjects.id')
+        ->join('users','users.id','subjects.created_by')
+        ->where('subjects.is_delete','=',0)
+        ->where('subjects.status','=',0)
+        ->count();
+            return $return;
       }
 }

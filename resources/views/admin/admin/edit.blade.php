@@ -25,7 +25,7 @@
 
               <!-- /.card-header -->
               <!-- form start -->
-              <form method="post" action="">
+              <form method="post" action="" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="card-body">
                   <div class="form-group">
@@ -42,7 +42,16 @@
                     <label for="exampleInputPassword1">Password</label>
                     <input type="password" class="form-control" id="exampleInputPassword1"  name="password">
                   </div>
+                  <div class="form-group">
+                    <label for="profile_pic">Profile Pic <span style="color: red;"></span> </label>
 
+                    <input type="file" class="form-control"  id="profile_pic"  name="profile_pic" >
+                    <div style="color:red;">{{ $errors->first('profile_pic') }}</div>
+                    @if(!empty($getRecord->getProfilepic()))
+                     <img src="{{ $getRecord->getProfilepic() }}" alt="" style="height:100px;">
+                    @endif
+
+                 </div>
 
 
                 </div>

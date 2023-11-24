@@ -123,6 +123,38 @@ class Homework extends Model
         ->paginate(5);
         return $return;
     }
+    static public function getRecordStudentCount($class_ids,$student_id){
+        $return=self::select('homework.id')
+        ->join('users','users.id','=','homework.created_by')
+        ->join('class','class.id','=','homework.class_id')
+        ->join('subjects','subjects.id','=','homework.subject_id')
+        ->where('homework.class_id','=', $class_ids)
+        ->where('homework.is_delete','=',0)
+        ->whereNotIn('homework.id', function ($query) use ($student_id) {
+            $query->select('submit_homework.homework_id')
+                ->from('submit_homework')
+                ->where('submit_homework.student_id', $student_id);
+        });
+        $return=$return->orderBy('homework.id','desc')
+        ->count();
+        return $return;
+    }
+    static public function getRecordStudentCountParent($class_ids,$student_ids){
+        $return=self::select('homework.id')
+        ->join('users','users.id','=','homework.created_by')
+        ->join('class','class.id','=','homework.class_id')
+        ->join('subjects','subjects.id','=','homework.subject_id')
+        ->whereIn('homework.class_id', $class_ids)
+        ->where('homework.is_delete','=',0)
+        ->whereNotIn('homework.id', function ($query) use ($student_ids) {
+            $query->select('submit_homework.homework_id')
+                ->from('submit_homework')
+                ->whereIn('submit_homework.student_id', $student_ids);
+        });
+        $return=$return->orderBy('homework.id','desc')
+        ->count();
+        return $return;
+    }
     public function getDocument(){
         if(!empty($this->document) && file_exists('homework/images/'.$this->document)){
             return url('homework/images/'.$this->document);

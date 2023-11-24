@@ -114,9 +114,7 @@
                     <td>{!! $value->description !!}</td>
                     <td>{{ $value->created_by_name }}</td>
                     <td>{{ date('d-m-Y',strtotime($value->created_at)) }}</td>
-                    <td style="min-width: 100px;">
-                        <a href="{{url('student/my_homework/submit_homework/'.$value->id)}}" class="btn btn-success" >Submit Homework</a>
-                    </td>
+                    
                    </tr>
                     @empty
                     <td colspan="100%" style="text-align: center;color:red;">Record Not Found</td>

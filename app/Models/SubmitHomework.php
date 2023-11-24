@@ -36,6 +36,7 @@ class SubmitHomework extends Model
         return $return;
 
     }
+
     static public function getRecordStudent($student_id){
         $return= self::select('submit_homework.*','class.name as class_name','subjects.name as subject_name')
         ->join('homework','homework.id','=','submit_homework.homework_id')
@@ -70,6 +71,26 @@ class SubmitHomework extends Model
 
         $return=$return->orderBy('submit_homework.id','desc')
         ->paginate(10);
+        return $return;
+
+    }
+    static public function getSubmittedHomework($student_id){
+        $return= self::select('submit_homework.id')
+        ->join('homework','homework.id','=','submit_homework.homework_id')
+        ->join('class','class.id','=','homework.class_id')
+        ->join('subjects','subjects.id','=','homework.subject_id')
+        ->where('submit_homework.student_id', $student_id)
+        ->count();
+        return $return;
+
+    }
+    static public function getSubmittedHomeworkParent($student_ids){
+        $return= self::select('submit_homework.id')
+        ->join('homework','homework.id','=','submit_homework.homework_id')
+        ->join('class','class.id','=','homework.class_id')
+        ->join('subjects','subjects.id','=','homework.subject_id')
+        ->whereIn('submit_homework.student_id', $student_ids)
+        ->count();
         return $return;
 
     }

@@ -9,8 +9,7 @@ use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
-use Session;
-
+use Illuminate\Support\Facades\Session;
 
 
 class FeesCollectionController extends Controller
@@ -22,6 +21,13 @@ class FeesCollectionController extends Controller
         }
         $data['header_title']='Fees Collection';
         return view('admin.fees_collection.collect_fees',$data);
+
+    }
+    public function CollectFeesReport(){
+        $data['getRecord']=AddFeesStudent::getRecord();
+        $data['getClass']=ClassModel::getClass();
+        $data['header_title']='Collect Fees Report';
+        return view('admin.fees_collection.collect_fees_report',$data);
 
     }
     public function AddCollectFees($student_id){
