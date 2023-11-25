@@ -18,6 +18,7 @@ use App\Http\Controllers\CommunicateController;
 use App\Http\Controllers\FeesCollectionController;
 use App\Http\Controllers\HomeworkController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -278,8 +279,9 @@ Route::group(['middleware'=> 'parent'], function () {
         Route::get('parent/stripe/payment_success/{student_id}', [FeesCollectionController::class,'PaymentSuccessStripeParent']);
         Route::get('parent/stripe/payment_error/{student_id}', [FeesCollectionController::class,'PaymentErrorParent']);
 
+});
 
-
-
+Route::group(['middleware'=> 'common'], function () {
+    Route::get('chat', [ChatController::class,'chat']);
 
 });

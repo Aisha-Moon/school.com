@@ -67,7 +67,7 @@
             <!-- Message End -->
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+          <a href="{{ url('chat') }}" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
       </li>
 
@@ -649,7 +649,7 @@
               @endif
 
           <li class="nav-item">
-            <a href="{{ url('/logout') }}" class="nav-link">
+            <a href="{{ url('/') }}" class="nav-link">
               <i class="nav-icon far fa-user"></i>
               <p>
                 Logout
