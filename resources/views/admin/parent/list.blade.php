@@ -162,7 +162,9 @@
                         <td>
                             <a href="{{ url('admin/parent/edit/'.$user->id) }}" class="btn btn-primary">Edit</a>
                             <a href="{{ url('admin/parent/delete/'.$user->id) }}" class="btn btn-danger">Delete</a>
-                            <a href="{{ url('admin/parent/my-student/'.$user->id) }}" class="btn btn-danger">My Student</a>
+                            <a href="{{ url('admin/parent/my-student/'.$user->id) }}" class="btn btn-info">My Student</a>
+                            <a href="{{ url('chat?receiver_id='.base64_encode($user->id)) }}" class="btn btn-primary">Send Message</a>
+
                         </td>
                     </tr>
                   @endforeach

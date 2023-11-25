@@ -94,6 +94,7 @@
                         <td>
                             <a href="{{ url('admin/admin/edit/'.$user->id) }}" class="btn btn-primary">Edit</a>
                             <a href="{{ url('admin/admin/delete/'.$user->id) }}" class="btn btn-danger">Delete</a>
+                            <a href="{{ url('chat?receiver_id='.base64_encode($user->id)) }}" class="btn btn-primary">Send Message</a>
                         </td>
                     </tr>
                   @endforeach
