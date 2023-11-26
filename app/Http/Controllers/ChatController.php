@@ -20,10 +20,12 @@ class ChatController extends Controller
                 return redirect()->back()->with('error','Error occured,Please try again.');
                 exit();
             }
+            Chat::updateCount($sender_id,$receiver_id);
             $data['getReceiver']=User::getSingle($receiver_id);
             $data['getChat']=Chat::getChat($receiver_id,$sender_id);
             // dd($data['getChat']);
         }
+        $data['getChatUser']=Chat::getChatUser($sender_id);
         return view('chat.list',$data);
 
 
