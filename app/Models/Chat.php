@@ -91,6 +91,13 @@ class Chat extends Model
         return self::where('sender_id',$receiver_id)->where('receiver_id',$sender_id)
         ->where('status',0)->update(['status'=>'1']);
     }
+    public function getFile(){
+        if(!empty($this->file) && file_exists('chating/images/' . $this->file)){
+            return url('chating/images/' . $this->file);
+        }else{
+            return "";
+        }
+    }
 
 }
 

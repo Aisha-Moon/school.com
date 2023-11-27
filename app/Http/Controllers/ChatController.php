@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
-    public function chat(Request $request){
+    public function chats(Request $request){
         $data['header_title'] ='My Chat';
 
         $sender_id=Auth::user()->id;
@@ -38,6 +38,14 @@ class ChatController extends Controller
         $chat->receiver_id=$request->receiver_id;
         $chat->message=$request->message;
         $chat->created_date=time();
+        if(!empty($request->file('file_name'))){
+            $file=$request->file('file_name');
+            $extension=$file->getClientOriginalExtension();
+            $filename=time().'.'.$extension;
+            $file->move('chating/images',$filename);
+            $chat->file=$filename;
+
+        }
         $chat->save();
 
         $getChat=Chat::where('id','=',$chat->id)->get();

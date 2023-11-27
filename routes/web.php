@@ -282,7 +282,7 @@ Route::group(['middleware'=> 'parent'], function () {
 });
 
 Route::group(['middleware'=> 'common'], function () {
-    Route::get('chat', [ChatController::class,'chat']);
+    Route::get('chat', [ChatController::class,'chats']);
     Route::post('submit_message', [ChatController::class,'submit_message']);
     Route::post('get_chat_window', [ChatController::class,'get_chat_window']);
     Route::post('get_chat_search_user', [ChatController::class,'get_chat_search_user']);
