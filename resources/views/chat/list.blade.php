@@ -291,15 +291,16 @@
                 <div id="plist" class="people-list">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                            <span class="input-group-text" id="getSearchUser"><i class="fa fa-search"></i></span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Search...">
+                        <input type="text" class="form-control" id="getSearch" placeholder="Search...">
+                        <input type="hidden" id="getReceiverIdDynamic" value="{{ $receiver_id }}">
                     </div>
-                    <ul class="list-unstyled chat-list mt-2 mb-0">
+                    <ul class="list-unstyled chat-list mt-2 mb-0" id="getSearchUserDynamic">
                        @include('chat._user');
                     </ul>
                 </div>
-                <div class="chat">
+                <div class="chat" id="getChatMessageAll">
                     @if(!empty($getReceiver))
                     @include('chat._message');
                     @else
@@ -318,6 +319,56 @@
 @endsection
 @section('script')
 <script type="text/javascript">
+
+    $('body').delegate('.getChatWindows','click',function(e){
+        e.preventDefault();
+        var receiver_id=$(this).attr('id');
+        $('#getReceiverIdDynamic').val(receiver_id);
+        $('.getChatWindows').removeClass('active');
+        $(this).addClass('active');
+        $.ajax({
+            type: "POST",
+            url:"{{ url('get_chat_window') }}",
+            data:{
+                'receiver_id':receiver_id,
+                '_token':'{{ csrf_token() }}',
+            },
+            dataType:'json',
+            success:function(data){
+                $('#clearMessage'+receiver_id).hide();
+                $('#getChatMessageAll').html(data.success);
+                window.history.pushState("","","{{ url('chat?receiver_id=') }}"+data.receiver_id);
+                scrolldown();
+
+            },
+            error:function(data){
+
+            }
+        });
+    });
+    $('body').delegate('#getSearchUser','click',function(e){
+        var search=$('#getSearch').val();
+        var receiver_id= $('#getReceiverIdDynamic').val();
+
+        $.ajax({
+            type: "POST",
+            url:"{{ url('get_chat_search_user') }}",
+            data:{
+                'search':search,
+                'receiver_id':receiver_id,
+                '_token':'{{ csrf_token() }}',
+            },
+            dataType:'json',
+            success:function(data){
+                $('#getSearchUserDynamic').html(data.success);
+
+            },
+            error:function(data){
+
+            }
+        });
+    });
+
     $('body').delegate('#submit_message','submit',function(e){
         e.preventDefault();
         $.ajax({
