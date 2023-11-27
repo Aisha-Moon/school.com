@@ -4,11 +4,13 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
-
-class CommonMiddleware
+class OnlineUser
 {
     /**
      * Handle an incoming request.
@@ -18,11 +20,12 @@ class CommonMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(!empty(Auth::check())){
-
-                return $next($request);
-            }else{
-            Auth::logout();
-            return redirect(url(''));
+            $expiretime=Carbon::now()->addMinutes(1);
+            Cache::put('OnlineUser'.Auth::user()->id,true,$expiretime);
+            $getUserInfo=User::getSingle(Auth::user()->id);
+            $getUserInfo->updated_at=date('Y-m-d H:i:s');
+            $getUserInfo->save();
         }
-      }
+        return $next($request);
+    }
 }

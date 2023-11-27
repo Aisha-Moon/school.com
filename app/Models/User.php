@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Request;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Cache;
 
 
 class User extends Authenticatable
@@ -100,6 +101,10 @@ class User extends Authenticatable
     }
     static public function getPaidAmount($student_id,$class_id){
         return AddFeesStudent::getPaidAmount($student_id,$class_id);
+    }
+
+     public function OnlineUser(){
+        return Cache::has('OnlineUser'.$this->id);
     }
     static public function getParent(){
         $return= self::select('users.*')

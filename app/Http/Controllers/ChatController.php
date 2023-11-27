@@ -15,6 +15,7 @@ class ChatController extends Controller
         $sender_id=Auth::user()->id;
         if(!empty($request->receiver_id)){
             $receiver_id=base64_decode($request->receiver_id);
+
             if($receiver_id==$sender_id){
                 return redirect()->back()->with('error','Error occured,Please try again.');
             }
@@ -62,7 +63,6 @@ class ChatController extends Controller
         return response()->json([
             "status"=>true,
             "receiver_id"=>base64_encode($receiver_id),
-
             "success"=>view('chat._message',[
                 "getReceiver"=>$getReceiver,
                 "getChat"=>$getChat,

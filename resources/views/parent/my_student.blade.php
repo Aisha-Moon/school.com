@@ -96,7 +96,7 @@
                             <td>{{ $user->height }}</td>
                             <td>{{ $user->weight }}</td>
                             <td>{{ date('d-m-y ,H:i A',strtotime($user->created_at)) }}</td>
-                           <td style="min-width:300px;">
+                           <td style="min-width:400px;">
                             <a style="margin-bottom: 10px;" class="btn btn-primary btn-sm" href="{{ url('parent/my_student/subject/'.$user->id) }}">Subject</a>
                             <a style="margin-bottom: 10px;" class="btn btn-info btn-sm" href="{{ url('parent/my_student/exam_timetable/'.$user->id) }}">Exam Timetable</a>
                             <a style="margin-bottom: 10px;" class="btn btn-secondary btn-sm" href="{{ url('parent/my_student/exam_result/'.$user->id) }}">Exam Result</a>
@@ -105,6 +105,8 @@
                             <a style="margin-bottom: 10px;" class="btn btn-info btn-sm" href="{{ url('parent/my_student_homework/'.$user->id) }}">Homework</a>
                             <a style="margin-bottom: 10px;" class="btn btn-success btn-sm" href="{{ url('parent/my_student_submitted_homework/'.$user->id) }}">submitted Homework</a>
                             <a style="margin-bottom: 10px;" class="btn btn-secondary btn-sm" href="{{ url('parent/my_student/fees_collection/'.$user->id) }}">Fees Collection</a>
+                            <a style="margin-bottom: 10px;" href="{{ url('chat?receiver_id='.base64_encode($user->id)) }}" class="btn btn-primary btn-sm">Send Message</a>
+
                            </td>
                         </tr>
                       @endforeach

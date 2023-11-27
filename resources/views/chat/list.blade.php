@@ -172,7 +172,7 @@
 
 .chat .chat-history .other-message:after {
     border-bottom-color: #e8f1f3;
-    left: 93%
+    left: 85%
 }
 
 .chat .chat-message {
@@ -294,7 +294,7 @@
                             <span class="input-group-text" id="getSearchUser"><i class="fa fa-search"></i></span>
                         </div>
                         <input type="text" class="form-control" id="getSearch" placeholder="Search...">
-                        <input type="hidden" id="getReceiverIdDynamic" value="{{ $receiver_id }}">
+                        {{-- <input type="hidden" id="getReceiverIdDynamic" value="{{ $receiver_id }}"> --}}
                     </div>
                     <ul class="list-unstyled chat-list mt-2 mb-0" id="getSearchUserDynamic">
                        @include('chat._user');
