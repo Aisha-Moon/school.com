@@ -62,6 +62,15 @@
                         <img src="{{ $getRecord->getFeviconIcon() }}" style="width: auto;height:50px;" alt="">
                         @endif
                  </div>
+                 <div class="form-group">
+                    <label for="school">School Name</label>
+                    <input type="text" class="form-control" id="school"  placeholder="School Name" name="school_name" value="{{ $getRecord->school_name }}">
+                  </div>
+                 <div class="form-group">
+                    <label for="school">Exam Description</label>
+                    <textarea class="form-control" name="exam_description" id="" >{{ $getRecord->exam_description }}</textarea>
+                  </div>
+
 
                 </div>
                 <div class="card-footer">

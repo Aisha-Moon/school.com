@@ -10,6 +10,7 @@ use App\Models\ExamSchedule;
 use App\Models\MarksGrade;
 use App\Models\MarksRegister;
 use App\Models\User;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -310,8 +311,32 @@ class ExamintaionController extends Controller
         return view('student.my_exam_result',$data);
 
       }
-      public function myExamResultPrint(){
-        return view('exam_result_print');
+      public function myExamResultPrint(Request $request){
+        $exam_id=$request->exam_id;
+        $student_id=$request->student_id;
+        $data['getExam']=Exam::getSingle($exam_id);
+        $data['getStudent']=User::getSingle($student_id);
+        $data['getClass']=MarksRegister::getClass($exam_id,$student_id);
+        $data['getSetting']=Setting::getSingle();
+        $getExamSubject=MarksRegister::getExamSubject($exam_id,$student_id);
+
+        $dataSubject=array();
+        foreach($getExamSubject as $exam){
+            $total_marks=$exam['class_work'] + $exam['home_work'] + $exam['test_work'] + $exam['exam'];
+            $dataS=array();
+            $dataS['subject_name']=$exam['subject_name'];
+            $dataS['class_work']=$exam['class_work'];
+            $dataS['home_work']=$exam['home_work'];
+            $dataS['test_work']=$exam['test_work'];
+            $dataS['exam']=$exam['exam'];
+            $dataS['total_marks']=$total_marks;
+            $dataS['full_marks']=$exam['full_marks'];
+            $dataS['pass_marks']=$exam['pass_marks'];
+            $dataSubject[]=$dataS;
+        };
+        $data['getExamMark']=$dataSubject;
+
+        return view('exam_result_print',$data);
       }
     //teacher side
     public function myExamTimetableTeacher(){

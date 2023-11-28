@@ -192,6 +192,7 @@ class UserController extends Controller
         $setting->paypal_email=trim($request->paypal_email);
         $setting->stripe_key=trim($request->stripe_key);
         $setting->stripe_secret=trim($request->stripe_secret);
+        $setting->school_name=trim($request->school_name);
         if(!empty($request->file('logo'))){
             $file=$request->file('logo');
             $extension=$file->getClientOriginalExtension();
@@ -208,7 +209,7 @@ class UserController extends Controller
             $setting->fevicon_icon=$fevicon;
 
         }
-      
+
         $setting->save();
         return redirect()->back()->with('success','Settings updated successfully');
 

@@ -48,10 +48,10 @@
             <tr>
                 <td width="5%"></td>
                 <td width="15%">
-                    <img src="http://localhost:8000/users/settings/1700835979.jpg" alt="AdminLTE Logo" style="width:auto;height:50px;border_radius:10px;">
+                    <img src="{{ $getSetting->getLogo() }}" alt="AdminLTE Logo" style="width:auto;height:50px;border_radius:10px;">
                 </td>
                 <td align="left">
-                    <h1>RAJUK UTTARA MODEL COLLEGE</h1>
+                    <h1>{{ $getSetting->school_name }}</h1>
                 </td>
                 <td></td>
             </tr>
@@ -65,7 +65,7 @@
                        <tbody>
                         <tr>
                             <td width="27%">Name Of Student :</td>
-                            <td style="border-bottom:1px solid; width:100%;"></td>
+                            <td style="border-bottom:1px solid; width:100%;">{{ $getStudent->name }} {{ $getStudent->last_name }}</td>
                         </tr>
                        </tbody>
                     </table>
@@ -73,7 +73,7 @@
                        <tbody>
                         <tr>
                             <td width="23%"> Admission Number :</td>
-                            <td style="border-bottom:1px solid; width:100%;"></td>
+                            <td style="border-bottom:1px solid; width:100%;">{{ $getStudent->admission_number }}</td>
                         </tr>
                        </tbody>
                     </table>
@@ -81,36 +81,25 @@
                        <tbody>
                         <tr>
                             <td width="23%">Class :</td>
-                            <td style="border-bottom:1px solid; width:100%;"></td>
+                            <td style="border-bottom:1px solid; width:100%;">{{ $getClass->class_name }}</td>
                         </tr>
                        </tbody>
                     </table>
                     <table class="margin-bottom" style="width: 100%;">
                        <tbody>
                         <tr>
-                            <td width="28%">Academic Session :</td>
-                            <td style="border-bottom:1px solid; width:20%;"></td>
-                            <td width="11%">Term :</td>
-                            <td style="border-bottom:1px solid; width:80%;"></td>
+                            <td width="11%">Term : </td>
+                            <td style="border-bottom:1px solid; width:80%;">{{ $getExam->name }}</td>
                         </tr>
                        </tbody>
                     </table>
-                    <table class="margin-bottom" style="width: 100%;">
-                       <tbody>
-                        <tr>
-                            <td width="18%">Total Score :</td>
-                            <td style="border-bottom:1px solid; width:50%;"></td>
-                            <td width="16%">Average :</td>
-                            <td style="border-bottom:1px solid; width:50%;"></td>
-                        </tr>
-                       </tbody>
-                    </table>
+
                 </td>
                 <td width="5%"></td>
                 <td width="20%" valign="top">
-                    <img src="http://localhost:8000/users/images/1701156761.jpg" alt="" style="height:100px;width:100px;border-radius:7px;">
+                    <img src="{{ $getStudent->getProfileDirect()  }}" alt="" style="height:100px;width:100px;border-radius:7px;">
                     <br>
-                    Gender :Female
+                    Gender :{{ $getStudent->gender }}
                 </td>
             </tr>
         </table>
@@ -118,7 +107,7 @@
             <table class="table table-bg">
                 <thead>
                   <tr>
-                    <th class="th">Subjects</th>
+                    <th class="th" style="text-align: left">Subjects</th>
                     <th class="th">Class Work</th>
                     <th class="th">Home Work</th>
                     <th class="th">Test Work</th>
@@ -130,41 +119,67 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="td text-container">Physics</td>
-                    <td class="td">23</td>
-                    <td class="td">22</td>
-                    <td class="td">22</td>
-                    <td class="td">22</td>
-                    <td class="td">89</td>
-                    <td class="td">34</td>
-                    <td class="td">100</td>
-                    <td class="td">
-                      <span style="color:green;font-weight:bold;">Passed</span>
-                    </td>
-                  </tr>
-                  <br>
-                  <tr>
-                    <td class="td text-container" colspan="2">
-                      <b>Grand Total : 89/100</b>
+                    @php
+                        $total_marks=0;
+                        $full_marks=0;
+                        $result_valid=0;
+                    @endphp
+                    @foreach ($getExamMark as $exam)
+                    @php
+                        $total_marks=$total_marks+$exam['total_marks'];
+                        $full_marks=$full_marks+$exam['full_marks'];
+                    @endphp
+                    <tr>
+                        <td class="td" style="width:250px; text-align:left;">{{ $exam['subject_name'] }}</td>
+                        <td class="td">{{ $exam['class_work'] }}</td>
+                        <td class="td">{{ $exam['home_work'] }}</td>
+                        <td class="td">{{ $exam['test_work'] }}</td>
+                        <td>{{ $exam['exam'] }}</td>
+                        <td class="td">{{ $exam['total_marks'] }}</td>
+                        <td class="td">{{ $exam['pass_marks'] }}</td>
+                        <td class="td">{{ $exam['full_marks'] }}</td>
+                        <td class="td">
+                            @if ( $exam['total_marks'] >= $exam['pass_marks'])
+                            <span style="color:green;font-weight:bold;">Passed</span>
+                            @else
+                            @php
+                                $result_valid=1;
+                            @endphp
+                            <span style="color:red;font-weight:bold;">Failed</span>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                    <td class="td" colspan="2">
+                        <b>Grand Total : {{ $total_marks }}/{{ $full_marks }}</b>
                     </td>
                     <td class="td" colspan="2">
-                      <b>Percentage : 89%</b>
+                        @php
+                            $percentage=($total_marks * 100)/ $full_marks;
+                            $getGrade=App\Models\MarksGrade::getGrade($percentage);
+                        @endphp
+                        <b>Percentage : {{ round($percentage) }}%</b>
                     </td>
                     <td class="td" colspan="2">
-                      <b>Grade :</b> A+, GpA5<br>
+
+                        @if(!empty($getGrade))
+                            <b>Grade :</b> {{ $getGrade }}<br>
+                        @endif
                     </td>
                     <td class="td" colspan="5">
-                      <b>Result : <span style="color:green;">Passed</span></b>
+                        <b>Result : @if ($result_valid==0)
+                            <span style="color:green;">Passed</span>
+                        @else
+                        <span style="color:red;">Failed</span>
+                        @endif</b>
                     </td>
-                  </tr>
-                </tbody>
+                  </tbody>
               </table>
 
         </div>
         <br>
         <div>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta omnis tempora fugit illum eum sint ipsum temporibus commodi, reiciendis sunt obcaecati, eius laudantium porro eligendi cum placeat neque? Sequi perferendis perspiciatis similique beatae explicabo facere, aut dicta dolores tenetur, voluptas hic natus doloremque, consequatur at quibusdam nisi molestiae dolor. Temporibus assumenda enim id sed harum, sunt ex deserunt rem. Quae inventore possimus, quod laboriosam dolorum omnis aut dicta quasi nostrum eligendi recusandae architecto fugit, officiis quaerat. Eius neque, at quos tempore excepturi, quis animi fugiat culpa praesentium, rem nemo provident. Eaque minima debitis animi cumque atque nihil, mollitia vel ducimus placeat consequatur maxime voluptatibus qui ullam recusandae similique quos asperiores enim ipsa, id impedit veniam tempore voluptates doloribus maiores! Id architecto odio, debitis omnis corporis eum magnam dolore accusamus, unde cupiditate at sapiente veritatis ipsum quisquam molestiae voluptate magni assumenda. Dolor adipisci doloremque magni sit neque totam voluptatum, ad porro modi praesentium quam, sequi alias aspernatur consequatur nemo obcaecati sunt consequuntur ipsa dolore iusto? Ipsa sequi dicta odio, vero nam, quis ipsum quibusdam voluptates similique facilis laborum quas perspiciatis. Neque repudiandae laboriosam expedita sequi, magni voluptas minima non praesentium, perspiciatis impedit fuga tenetur, aspernatur dolorum cumque nisi placeat porro. Quaerat.
+            {{ $getSetting->exam_description }}
           </div>
           <br>
           <table class="margin-bottom" style="width: 100%;">
