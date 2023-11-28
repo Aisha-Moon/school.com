@@ -283,6 +283,7 @@ class ExamintaionController extends Controller
         foreach($getExam as $value){
             $dataE=array();
             $dataE['exam_name']=$value->exam_name;
+            $dataE['exam_id']=$value->exam_id;
             $getExamSubject=MarksRegister::getExamSubject($value->exam_id,Auth::user()->id);
 
             $dataSubject=array();
@@ -308,6 +309,9 @@ class ExamintaionController extends Controller
         $data['header_title'] = 'My Exam Result';
         return view('student.my_exam_result',$data);
 
+      }
+      public function myExamResultPrint(){
+        return view('exam_result_print');
       }
     //teacher side
     public function myExamTimetableTeacher(){

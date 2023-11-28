@@ -196,6 +196,7 @@ Route::group(['middleware'=> 'student'], function () {
         Route::get('student/my_timetable', [ClassTimetableController::class,'myTimetable']);
         Route::get('student/my_exam_timetable', [ExamintaionController::class,'myExamTimetable']);
         Route::get('student/my_exam_result', [ExamintaionController::class,'myExamResult']);
+        Route::get('print/my_Exam_result/print', [ExamintaionController::class,'myExamResultPrint']);
         Route::get('student/my_calendar', [CalendarController::class,'myCalendar']);
         Route::get('student/my_attendance', [AttendanceController::class,'myAttendanceStudent']);
         Route::get(' student/my_notice_board', [CommunicateController::class,'myNoticeStudent']);
