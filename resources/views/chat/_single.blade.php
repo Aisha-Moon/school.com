@@ -5,7 +5,7 @@
      <span class="message-data-time">{{ Carbon\Carbon::parse($value->created_date)->diffForHumans() }}</span>
      <img src="{{ $value->getSender->getProfileDirect() }}" alt="avatar">
  </div>
- <div class="message other-message float-right"> {!! $value->message !!}
+ <div class="message other-message float-right" style="text-align: left;"> {!! nl2br($value->message) !!}
     @if(!empty($value->getFile()))
         <div>
             <a href="{{$value->getFile()  }}" download="" target="_blank">Attachment</a>
@@ -21,7 +21,7 @@
 
      <span class="message-data-time">{{ Carbon\Carbon::parse($value->created_date)->diffForHumans() }}</span>
  </div>
- <div class="message my-message">{!! $value->message !!}
+ <div class="message my-message">{!! nl2br($value->message) !!}
     <div>
         @if(!empty($value->getFile()))
         <div>

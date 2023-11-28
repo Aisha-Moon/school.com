@@ -9,7 +9,7 @@
     <form action="" id="submit_message" class="mb-0" method="post" enctype="multipart/form-data">
         <input type="hidden" value="{{ $getReceiver->id }}" name="receiver_id">
         {{ csrf_field() }}
-        <textarea name="message" id="clearMessage" required  class="form-control"></textarea>
+        <textarea name="message" id="clearMessage" required  class="form-control emojionearea"></textarea>
         <br>
         <div class="row">
                 <div class="col-md-6 hidden-sm ">

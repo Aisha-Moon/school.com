@@ -1,7 +1,9 @@
 
 @extends('layout.app')
 @section('style')
+<link rel="stylesheet" href="{{ asset('emojionearea/emojionearea.min.css') }}">
 <style type="text/css">
+
 
 .card {
     background: #fff;
@@ -145,6 +147,10 @@
     border-bottom-color: #fff;
     border-width: 10px;
     margin-left: -10px
+}
+.emojionearea-editor{
+    height: 54px !important;
+    min-height: 54px !important;
 }
 
 .chat .chat-history .my-message {
@@ -318,7 +324,10 @@
 </div>
 @endsection
 @section('script')
+<script src="{{ asset('emojionearea/emojionearea.min.js') }}"></script>
 <script type="text/javascript">
+
+$('.emojionearea').emojioneArea();
 
     $('body').delegate('.getChatWindows','click',function(e){
         e.preventDefault();
@@ -339,7 +348,7 @@
                 $('#getChatMessageAll').html(data.success);
                 window.history.pushState("","","{{ url('chat?receiver_id=') }}"+data.receiver_id);
                 scrolldown();
-
+                $('.emojionearea').emojioneArea();
             },
             error:function(data){
 
@@ -383,6 +392,7 @@
                 $('#clearMessage').val('');
                 $('#file_name').val('');
                 $('#getFileName').html('');
+                $('.emojionearea-editor').html('');
 
 
                 scrolldown();
